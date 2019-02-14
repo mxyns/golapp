@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Game of Life</string>
+    <string name="main_title">Game of Life</string>
+    <string name="main_editor_button">DRAW</string>
+    <string name="main_import_button">IMPORT</string>
+    <string name="main_gallery_button">GALLERY</string>
+    <string name="main_editor_settings_width_hint">width</string>
+    <string name="main_editor_settings_height_hint">height</string>
+    <string name="main_editor_go">GO!</string>
+
+    <string name="editor_title">Creating %1$dpx * %2$dpx image</string>
+    <string name="editor_color_picker_contentDescription">Color picker</string>
+    <string name="editor_switch_color_contentDescription">Switch color</string>
+    <string name="editor_save_image_contentDescription">Save image</string>
+    <string name="editor_send_image_contentDescription">Save image</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+</resources>

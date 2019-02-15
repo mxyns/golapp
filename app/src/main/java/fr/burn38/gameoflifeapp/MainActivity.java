@@ -1,5 +1,6 @@
 package fr.burn38.gameoflifeapp;
 
+import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -9,17 +10,20 @@ import android.text.InputFilter;
 
 import android.os.Bundle;
 
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
 
     static final String IMAGE_SIZE_KEY = "fr.burn38.gameoflifeapp.IMAGE_SIZE";
+    static MainActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        context = this;
     }
 
     @Override
@@ -57,4 +61,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_editor_settings_height).setVisibility(newState);
         findViewById(R.id.main_editor_settings_width).setVisibility(newState);
     }
+
+    public static File getCacheDirectory(){return context.getCacheDir();}
 }

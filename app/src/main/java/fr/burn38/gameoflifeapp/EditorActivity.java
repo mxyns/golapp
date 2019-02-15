@@ -55,13 +55,13 @@ public class EditorActivity extends AppCompatActivity {
 
     public void saveImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
-        FileUtils.saveImage(im.getImage(), getFilesDir());
+        FileUtils.saveImage(im.getImage(), getFilesDir(), "imgs");
     }
 
     public void sendImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
         Bitmap bm = im.getImage();
 
-        boolean success = NetworkUtils.sendImage(bm);
+        NetworkUtils.postImage(bm);
     }
 }

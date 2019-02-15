@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Date;
 
 public class FileUtils {
 
-    public static void saveImage(Bitmap bm, File root) {
-        File imgs = new File(root.getAbsolutePath(), "imgs");
+    public static File saveImage(Bitmap bm, File root, String folder) {
+        File imgs = new File(root.getAbsolutePath(), folder);
         if (!imgs.exists()) {
             imgs.mkdir();
         }
@@ -44,6 +43,7 @@ public class FileUtils {
             }
 
         }
+        return new File(new File(root, folder), img.getName()+(img.getName().endsWith(".bmp") ? "" : ".bmp"));
     }
 
     static File[] ls(File root) {

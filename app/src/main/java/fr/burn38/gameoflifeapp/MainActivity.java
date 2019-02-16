@@ -1,8 +1,9 @@
 package fr.burn38.gameoflifeapp;
 
-import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+import fr.burn38.gameoflifeapp.utils.FileUtils;
+
 import android.view.View;
 import android.widget.EditText;
 import android.text.InputFilter;
@@ -15,6 +16,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    //TODO: store key to @strings
     static final String IMAGE_SIZE_KEY = "fr.burn38.gameoflifeapp.IMAGE_SIZE";
     static MainActivity context;
 
@@ -34,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
         ((EditText)findViewById(R.id.main_editor_settings_width)).setFilters(new InputFilter[] {new MinMaxFilter(1,1920)});
     }
 
+    @Override
+    protected void onDestroy() {
+        FileUtils.clearCache();
+
+        super.onDestroy();
+    }
+
     public void startEditor(View v) {
         String sWidth = ((EditText)findViewById(R.id.main_editor_settings_width)).getText().toString();
         String sHeight = ((EditText)findViewById(R.id.main_editor_settings_height)).getText().toString();
@@ -46,21 +55,24 @@ public class MainActivity extends AppCompatActivity {
             } catch(Exception e){ System.out.println("Can't parse image width/height");}
         }
         Intent editorIntent = new Intent(MainActivity.this, EditorActivity.class);
+
         Bundle b = new Bundle();
-        b.putIntArray(IMAGE_SIZE_KEY, new int[] {width, height});
+            b.putIntArray(IMAGE_SIZE_KEY, new int[] {width, height});
+
         editorIntent.putExtras(b);
+
         startActivity(editorIntent);
     }
 
-    public void toggleDrawSettings(View v) {
+    public void displayCanvasSizeFields(View v) {
         boolean state = findViewById(R.id.main_editor_settings_layout).getVisibility() == View.GONE;
         int newState = state ? View.VISIBLE : View.GONE;
 
-        System.out.println("-> "+(state ? "VISIBLE" : "GONE"));
         findViewById(R.id.main_editor_settings_layout).setVisibility(newState);
         findViewById(R.id.main_editor_settings_height).setVisibility(newState);
         findViewById(R.id.main_editor_settings_width).setVisibility(newState);
     }
 
     public static File getCacheDirectory(){return context.getCacheDir();}
+    public static File getInternalStorageDirectory() {return context.getFilesDir();}
 }

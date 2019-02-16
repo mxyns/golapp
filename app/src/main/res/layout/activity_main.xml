@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="150dp"
-            android:onClick="toggleDrawSettings"
+            android:onClick="displayCanvasSizeFields"
             android:text="@string/main_editor_button" />
 
         <LinearLayout

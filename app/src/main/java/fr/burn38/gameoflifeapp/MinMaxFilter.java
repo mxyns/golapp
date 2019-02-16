@@ -15,11 +15,6 @@ public class MinMaxFilter implements InputFilter {
         this.mIntMax = maxValue;
     }
 
-    public MinMaxFilter(String minValue, String maxValue) {
-        this.mIntMin = Integer.parseInt(minValue);
-        this.mIntMax = Integer.parseInt(maxValue);
-    }
-
     @Override
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
         try {

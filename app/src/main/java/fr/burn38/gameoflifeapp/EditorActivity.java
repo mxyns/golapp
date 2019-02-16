@@ -8,6 +8,9 @@ import android.widget.TextView;
 import android.view.View;
 import android.os.Bundle;
 
+import java.io.File;
+import java.util.Date;
+
 import androidx.appcompat.app.AppCompatActivity;
 import fr.burn38.gameoflifeapp.utils.FileUtils;
 import fr.burn38.gameoflifeapp.utils.NetworkUtils;
@@ -55,13 +58,15 @@ public class EditorActivity extends AppCompatActivity {
 
     public void saveImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
-        FileUtils.saveImage(im.getImage(), getFilesDir(), "imgs");
+        FileUtils.saveImage(im.getImage(), new File(getFilesDir(), "imgs"));
     }
 
     public void sendImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
         Bitmap bm = im.getImage();
 
-        NetworkUtils.postImage(bm);
+        File bitmapFile = new File(new File(MainActivity.getCacheDirectory(), "imgs"), new Date().toString().replaceAll(" ","_")+".bmp");
+
+        NetworkUtils.postImage(bm, bitmapFile);
     }
 }

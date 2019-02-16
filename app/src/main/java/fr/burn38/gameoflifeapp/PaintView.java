@@ -17,11 +17,14 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-
+//TODO: add onDrag event
+//TODO: fix antialiasing problem
 public class PaintView extends AppCompatImageView {
 
     protected int pColor = Color.BLACK;
     protected Paint drawPaint;
+
+    //TODO: only store value per pixel (no duplicate pixels allowed)
     protected List<Pixel> pixels = new ArrayList<>();
     //protected short pSize = 1;
     protected Canvas canvas;
@@ -73,10 +76,6 @@ public class PaintView extends AppCompatImageView {
         if (x > -1 && y > -1 && y < EditorActivity.IMAGE_HEIGHT && x < EditorActivity.IMAGE_WIDTH)
             pixels.add(new Pixel(x, y, pColor));
 
-        /*System.out.println(this.getWidth()+"w; "+this.getHeight()+"h");
-        System.out.println(this.getMeasuredWidth()+"X; "+this.getMeasuredHeight()+"Y");
-        System.out.println(event.getX()+"x; "+event.getY());
-        System.out.println(touchX+"rX; "+touchY+"rY");*/
         display(bitmap);
 
         postInvalidate();

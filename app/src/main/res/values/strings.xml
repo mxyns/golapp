@@ -8,13 +8,17 @@
     <string name="main_editor_settings_height_hint">height</string>
     <string name="main_editor_go">GO!</string>
 
-    <string name="editor_title">Creating %1$dpx * %2$dpx image</string>
-    <string name="editor_color_picker_contentDescription">Color picker</string>
+    <string name="editor_title">Creating <b>%1$d</b>px * <b>%2$d</b>px image</string>
+    <string name="editor_clear_contentDescription">Clear canvas</string>
     <string name="editor_switch_color_contentDescription">Switch color</string>
     <string name="editor_save_image_contentDescription">Save image</string>
-    <string name="editor_send_image_contentDescription">Save image</string>
-    <string name="title_activity_gallery">GalleryActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="editor_send_image_contentDescription">Send initial state image to server</string>
+
+    <string name="viewer_title"><![CDATA[Displaying image <b>%1$s</b> (<b>%2$s</b>)]]></string>
+    <string name="viewer_send_image_contentDescription">Send image to processing server</string>
+    <string name="viewer_save_image_contentDescription">Save image</string>
+    <string name="viewer_delete_image_contentDescription">Delete image</string>
+    <string name="viewer_play_animated_image_contentDescription">Play gif</string>
+    <string name="viewer_pause_animated_image_contentDescription">Pause gif</string>
 
 </resources>

@@ -25,6 +25,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-beta01'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
     implementation 'com.squareup.okio:okio:2.2.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'

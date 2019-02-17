@@ -14,10 +14,12 @@ import java.util.Date;
 import androidx.appcompat.app.AppCompatActivity;
 import fr.burn38.gameoflifeapp.utils.FileUtils;
 import fr.burn38.gameoflifeapp.utils.NetworkUtils;
+import fr.burn38.gameoflifeapp.views.PaintView;
 
+//TODO: possibility to choose image name
 public class EditorActivity extends AppCompatActivity {
 
-    static int IMAGE_WIDTH = 0, IMAGE_HEIGHT = 0;
+    public static int IMAGE_WIDTH = 0, IMAGE_HEIGHT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,8 @@ public class EditorActivity extends AppCompatActivity {
 
     public void saveImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
-        FileUtils.saveImage(im.getImage(), new File(getFilesDir(), "imgs"));
+        String filename = new Date().toString().replaceAll(" ","_")+".bmp";
+        FileUtils.saveImage(im.getImage(), new File(new File(getFilesDir(), "imgs"), filename));
     }
 
     public void sendImage(View v) {

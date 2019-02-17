@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.burn38.gameoflifeapp.EditorActivity">
+    tools:context=".ViewerActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -19,12 +19,12 @@
         app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            android:id="@+id/editor_title"
+            android:id="@+id/viewer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center_horizontal"
-            android:text="@string/editor_title"
+            android:text="@string/viewer_title"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -37,8 +37,8 @@
             android:background="?attr/colorAccent"
             android:clickable="false">
 
-            <fr.burn38.gameoflifeapp.views.PaintView
-                android:id="@+id/editor_image_view"
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/viewer_displayview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"
@@ -59,55 +59,57 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/editor_clear_button"
+            android:id="@+id/viewer_delete_image_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/editor_clear_contentDescription"
-            android:onClick="clearImage"
-            app:srcCompat="@android:drawable/ic_delete"
-            tools:srcCompat="@android:drawable/ic_delete" />
-
-        <ImageButton
-            android:id="@+id/editor_switch_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:contentDescription="@string/viewer_delete_image_contentDescription"
+            android:onClick="deleteImages"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:padding="5dp"
-            android:onClick="switchColor"
-            android:contentDescription="@string/editor_switch_color_contentDescription"
-            app:srcCompat="@drawable/ic_switch_color_black"
-            tools:srcCompat="@drawable/ic_switch_color_black" />
+            android:tint="@color/colorAccent"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            tools:srcCompat="@android:drawable/ic_menu_delete" />
 
         <ImageButton
-            android:id="@+id/editor_save_image_button"
+            android:id="@+id/viewer_save_image_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/editor_save_image_contentDescription"
-            android:onClick="saveImage"
+            android:contentDescription="@string/viewer_save_image_contentDescription"
+            android:onClick="moveFilesToInternalStorage"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_save"
             tools:srcCompat="@drawable/ic_save" />
 
         <ImageButton
-            android:id="@+id/editor_send_image_button"
+            android:id="@+id/viewer_play_animated_image_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/viewer_play_animated_image_contentDescription"
+            android:onClick="onPlayButton"
+            android:scaleType="fitCenter"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_media_play"
+            tools:srcCompat="@android:drawable/ic_media_play" />
+
+        <ImageButton
+            android:id="@+id/viewer_send_image_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/editor_send_image_contentDescription"
-            android:onClick="sendImage"
+            android:contentDescription="@string/viewer_send_image_contentDescription"
             android:padding="12dp"
             android:scaleType="fitCenter"
+            android:onClick="sendImage"
             app:srcCompat="@drawable/ic_send_arrow"
             tools:srcCompat="@drawable/ic_send_arrow" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

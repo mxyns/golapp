@@ -1,13 +1,17 @@
 package fr.burn38.gameoflifeapp.utils;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import fr.burn38.gameoflifeapp.EditorActivity;
 import fr.burn38.gameoflifeapp.MainActivity;
+import fr.burn38.gameoflifeapp.ViewerActivity;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,7 +25,10 @@ public class NetworkUtils {
     //TODO: store api_url to @strings
 
     public static void postImage(Bitmap bm, File bmFile) {
-            Thread thread = new Thread(new PostThread(bm, bmFile));
+        postImage(bm, bmFile, null);
+    }
+    public static void postImage(Bitmap bm, File bmFile, File outputFile) {
+            Thread thread = new Thread(new PostThread(bm, bmFile, outputFile));
             thread.start();
     }
     static Request createPostRequest(String url, Bitmap bm, File bmFile) {
@@ -45,17 +52,22 @@ class PostThread implements Runnable {
 
     private Bitmap bm;
     private File bmFile;
+    private File outputFile;
     private String url;
     private String logTag = "[PostThread][%step]";
     private String step = "start";
 
     PostThread(Bitmap bm, File bmFile) {
-        this(NetworkUtils.API_URL, bm, bmFile);
+        this(NetworkUtils.API_URL, bm, bmFile, null);
     }
-    PostThread(String url, Bitmap bm, File bmFile) {
+    PostThread(Bitmap bm, File bmFile, File outputFile) {
+        this(NetworkUtils.API_URL, bm, bmFile, outputFile);
+    }
+    PostThread(String url, Bitmap bm, File bmFile, File outputFile) {
         this.bm = bm;
         this.url = url;
         this.bmFile = bmFile;
+        this.outputFile = outputFile;
     }
 
     @Override
@@ -81,7 +93,7 @@ class PostThread implements Runnable {
         }
 
         step = "request";
-        if (!r.isSuccessful()) {
+        if (r != null && !r.isSuccessful()) {
             Log.e(logTag.replaceAll("%step",step),"Request not successful: "+r.message());
         } else {
             step = "response";
@@ -96,11 +108,13 @@ class PostThread implements Runnable {
 
                 InputStream input = r.body().byteStream();
                 String originalName = bmFile.getName().substring(0, bmFile.getName().lastIndexOf("."));
+
                 File output = new File(new File(MainActivity.getCacheDirectory(), "animated"), originalName+".gif");
+                if (this.outputFile != null) output = this.outputFile;
 
                 File gif = FileUtils.saveGif(input, output);
                 if (gif.exists()) {
-                    //TODO: open gif in a viewer activity.
+                    MainActivity.startViewer(gif);
                 }
             }
         }

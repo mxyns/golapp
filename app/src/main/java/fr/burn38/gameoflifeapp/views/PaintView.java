@@ -1,4 +1,4 @@
-package fr.burn38.gameoflifeapp;
+package fr.burn38.gameoflifeapp.views;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.PaintFlagsDrawFilter;
 
 import androidx.appcompat.widget.AppCompatImageView;
+import fr.burn38.gameoflifeapp.EditorActivity;
+
 import android.util.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +61,12 @@ public class PaintView extends AppCompatImageView {
         drawPaint.setDither(false);
     }
 
-    protected void changeColor(int c) {
+    public void changeColor(int c) {
         pColor = c;
         drawPaint.setColor(pColor);
     }
 
-    protected int getColor() {
+    public int getColor() {
         return pColor;
     }
 
@@ -82,14 +84,14 @@ public class PaintView extends AppCompatImageView {
         return true;
     }
 
-    protected void display(Bitmap bm) {
+    private void display(Bitmap bm) {
         for (Pixel p : pixels) {
             bm.setPixel(p.x(), p.y(), p.color());
         }
         invalidate();
     }
 
-    protected void clear() {
+    public void clear() {
         pixels = new ArrayList<>();
         setupCanvas();
         invalidate();

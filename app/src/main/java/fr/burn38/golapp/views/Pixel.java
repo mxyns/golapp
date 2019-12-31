@@ -1,4 +1,4 @@
-package fr.burn38.gameoflifeapp.views;
+package fr.burn38.golapp.views;
 
 class Pixel {
 

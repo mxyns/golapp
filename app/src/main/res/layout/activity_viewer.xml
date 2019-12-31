@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,7 +37,15 @@
             android:background="?attr/colorAccent"
             android:clickable="false">
 
-            <pl.droidsonroids.gif.GifImageView
+            <!--<pl.droidsonroids.gif.GifImageView
+                android:id="@+id/viewer_displayview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:scaleType="fitXY"
+                android:visibility="visible" />-->
+
+            <fr.burn38.golapp.views.ViewerImageView
                 android:id="@+id/viewer_displayview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -65,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/viewer_delete_image_contentDescription"
-            android:onClick="deleteImages"
+            android:onClick="moveFilesToCache"
             android:scaleType="fitCenter"
             android:tint="@color/colorAccent"
             app:srcCompat="@android:drawable/ic_menu_delete"
@@ -80,7 +88,8 @@
             android:contentDescription="@string/viewer_save_image_contentDescription"
             android:onClick="moveFilesToInternalStorage"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_save"
+            android:src="@drawable/ic_save"
+            tools:src="@drawable/ic_save"
             tools:srcCompat="@drawable/ic_save" />
 
         <ImageButton
@@ -104,12 +113,13 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:contentDescription="@string/viewer_send_image_contentDescription"
+            android:onClick="sendImage"
             android:padding="12dp"
             android:scaleType="fitCenter"
-            android:onClick="sendImage"
-            app:srcCompat="@drawable/ic_send_arrow"
+            android:src="@drawable/ic_send_arrow"
+            tools:src="@drawable/ic_send_arrow"
             tools:srcCompat="@drawable/ic_send_arrow" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
 

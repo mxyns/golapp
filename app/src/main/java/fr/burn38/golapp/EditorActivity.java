@@ -1,20 +1,19 @@
-package fr.burn38.gameoflifeapp;
+package fr.burn38.golapp;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.view.View;
-import android.os.Bundle;
 
 import java.io.File;
 import java.util.Date;
 
-import androidx.appcompat.app.AppCompatActivity;
-import fr.burn38.gameoflifeapp.utils.FileUtils;
-import fr.burn38.gameoflifeapp.utils.NetworkUtils;
-import fr.burn38.gameoflifeapp.views.PaintView;
+import fr.burn38.golapp.utils.FileUtils;
+import fr.burn38.golapp.utils.NetworkUtils;
+import fr.burn38.golapp.views.PaintView;
 
 //TODO: possibility to choose image name
 public class EditorActivity extends AppCompatActivity {
@@ -61,7 +60,7 @@ public class EditorActivity extends AppCompatActivity {
     public void saveImage(View v) {
         PaintView im = findViewById(R.id.editor_image_view);
         String filename = new Date().toString().replaceAll(" ","_")+".bmp";
-        FileUtils.saveImage(im.getImage(), new File(new File(getFilesDir(), "imgs"), filename));
+        FileUtils.saveImage(im.getImage(), new File(new File(getFilesDir(), "imgs"), filename)); // to internal storage
     }
 
     public void sendImage(View v) {

@@ -1,4 +1,4 @@
-package fr.burn38.gameoflifeapp.utils;
+package fr.burn38.golapp.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,11 +12,108 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
-import fr.burn38.gameoflifeapp.MainActivity;
-import kotlin.text.Regex;
+import fr.burn38.golapp.MainActivity;
 
 public class FileUtils {
+
+
+    public enum LOCATION {
+        CACHE,
+        INTERNAL;
+
+
+        public static LOCATION fromFile(File file) {
+
+            return file.getPath().contains(MainActivity.getCacheDirectory().getPath()) ? CACHE : file.getPath().contains(MainActivity.getInternalStorageDirectory().getPath()) ? INTERNAL : null;
+        }
+
+        public File getDirectory() {
+            switch (this) {
+                case INTERNAL:
+                    return MainActivity.getInternalStorageDirectory();
+                case CACHE:
+                    return MainActivity.getCacheDirectory();
+                default:
+                    return MainActivity.getCacheDirectory();
+            }
+        }
+    }
+
+
+    // Can't check if File is a Directory <=> a Folder bc Java is fucked up and .isDirectory() returns false when File is a Directory
+    public static class Folder {
+
+        LOCATION location;
+        File location_directory;
+        String path;
+
+        public Folder(File file) /*throws Exception*/ {
+            this(null, file);
+            this.location = LOCATION.fromFile(file);
+            this.location_directory = location.getDirectory();
+        }
+        public Folder(LOCATION location, File file) /*throws Exception*/ {
+            /*if (!file.isDirectory())
+                throw(new Exception());
+            else {*/
+                this.location = location;
+                if (location != null) this.location_directory = location.getDirectory();
+                this.path = file.getPath();
+            /*}*/
+        }
+        public Folder(LOCATION location, Path path) /*throws Exception*/ {
+            this(location, path.toString());
+        }
+        public Folder(LOCATION location, String path) /*throws Exception*/ { this(location, new File(path)); }
+
+        public File getLocationDirectory() {
+            return this.location_directory;
+        }
+        public LOCATION getLocation() {
+            return this.location;
+        }
+        public String getPath() {
+            return this.path;
+        }
+        public String getName() {
+            return location_directory.getName();
+        }
+        public File toFile() {
+            return new File(path);
+        }
+        public File[] getSubdirectories() {
+            File[] ls = FileUtils.ls(toFile());
+            List<File> subdir = new ArrayList<>();
+            for (File file : ls) {
+                if(file.isDirectory()) subdir.add(file);
+            }
+
+            return subdir.toArray(new File[subdir.size()]);
+        }
+        public File[] getFileChildren() {
+            File[] ls = FileUtils.ls(toFile());
+            List<File> subdir = new ArrayList<>();
+            for (File file : ls) {
+                if(!file.isDirectory()) subdir.add(file);
+            }
+
+            return subdir.toArray(new File[subdir.size()]);
+        }
+        public File[] list() {
+            return FileUtils.ls(toFile());
+        }
+
+        public boolean isEmpty() {
+            File[] files = list();
+
+            return /*location_directory.isDirectory() && */ files != null && files.length == 0;
+        }
+    }
 
     private static File createFile(File file) {
         if(!file.exists() && !file.getParentFile().exists()) file.getParentFile().mkdirs();
@@ -38,18 +135,17 @@ public class FileUtils {
     }
 
     //Object[] format: {boolean result, File newFile}
-    public static Object[] moveFileToInternalStorage(File oldFile){
+    private static Object[] moveFile(File oldFile, File newFile){
         if(oldFile == null) {
-            System.out.println("[moveFileToInternalStorage] oldFile=null");
+            System.out.println("[moveFile] oldFile=null");
+            return new Object[] {false, null};
+        }
+        if(newFile == null) {
+            System.out.println("[moveFile] newFile=null");
             return new Object[] {false, null};
         }
 
-        File internal = MainActivity.getInternalStorageDirectory();
-        File cache = MainActivity.getCacheDirectory();
-
-        File newFile = new File(internal.getPath(), getParentsAfterAncestor(cache, oldFile)+oldFile.getName());
         createFile(newFile);
-
 
         boolean written = false;
         try {
@@ -64,8 +160,8 @@ public class FileUtils {
             outputStream.write(byteArrayStream.toByteArray());
             written = true;
         } catch (IOException ex) {
-            System.out.println("[moveFileToInternalStorage] oldFile="+oldFile.getPath()+"("+oldFile.exists()+")");
-            System.out.println("[moveFileToInternalStorage] newFile="+newFile.getPath()+"("+newFile.exists()+")");
+            System.out.println("[moveFile] oldFile="+oldFile.getPath()+"("+oldFile.exists()+")");
+            System.out.println("[moveFile] newFile="+newFile.getPath()+"("+newFile.exists()+")");
             ex.printStackTrace();
         }
 
@@ -73,6 +169,32 @@ public class FileUtils {
             return new Object[] {oldFile.delete(), newFile};
         }
         return new Object[] {false, oldFile};
+    }
+    public static Object[] moveFileToInternalStorage(File oldFile){
+        if(oldFile == null) {
+            System.out.println("[moveFileToInternalStorage] oldFile=null");
+            return new Object[] {false, null};
+        }
+
+        File internal = MainActivity.getInternalStorageDirectory();
+        File cache = MainActivity.getCacheDirectory();
+
+        File newFile = new File(internal.getPath(), getParentsAfterAncestor(cache, oldFile)+oldFile.getName());
+
+        return moveFile(oldFile, newFile);
+    }
+    public static Object[] moveFileToCache(File oldFile){
+        if(oldFile == null) {
+            System.out.println("[moveFileToInternalStorage] oldFile=null");
+            return new Object[] {false, null};
+        }
+
+        File internal = MainActivity.getInternalStorageDirectory();
+        File cache = MainActivity.getCacheDirectory();
+
+        File newFile = new File(cache.getPath(), getParentsAfterAncestor(internal, oldFile)+oldFile.getName());
+
+        return moveFile(oldFile, newFile);
     }
 
     public static Bitmap loadBitmap(File f) {
@@ -146,8 +268,9 @@ public class FileUtils {
         return null;
     }
 
-    static File[] ls(File folder) {
-        return folder.listFiles();
+    public static File[] ls(File folder) {
+        File[] files = folder.listFiles();
+        return (files == null ? new File[]{} : files);
     }
     public static String getFileExtension(File file) {
         return file.getName().substring(file.getName().lastIndexOf("."));

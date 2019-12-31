@@ -1,10 +1,9 @@
-package fr.burn38.gameoflifeapp;
+package fr.burn38.golapp;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import fr.burn38.gameoflifeapp.utils.FileUtils;
 
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.text.InputFilter;
@@ -13,12 +12,15 @@ import android.text.InputFilter;
 import android.os.Bundle;
 
 import java.io.File;
+import java.util.Objects;
+
+import fr.burn38.golapp.utils.FileUtils;
 
 
 public class MainActivity extends AppCompatActivity {
 
     //TODO: store key to @strings
-    static final String IMAGE_SIZE_KEY = "fr.burn38.gameoflifeapp.IMAGE_SIZE";
+    public static final String IMAGE_SIZE_KEY = "fr.burn38.gameoflifeapp.IMAGE_SIZE";
     public static final String VIEWER_LOCATION_KEY = "fr.burn38.gameoflifeapp.VIEWER_LOCATION";
     public static final String VIEWER_FILE_NAME_KEY = "fr.burn38.gameoflifeapp.VIEWER_FILE_NAME";
 
@@ -61,25 +63,31 @@ public class MainActivity extends AppCompatActivity {
         Intent editorIntent = new Intent(MainActivity.this, EditorActivity.class);
 
         Bundle b = new Bundle();
-            b.putIntArray(IMAGE_SIZE_KEY, new int[] {width, height});
+        b.putIntArray(IMAGE_SIZE_KEY, new int[] {width, height});
 
         editorIntent.putExtras(b);
 
         startActivity(editorIntent);
     }
     public static void startViewer(File f){
+        System.out.println("Someone tried to start viewer for file " + f);
         startViewer(context, f);
     }
     public static void startViewer(Context context, File f) {
         Intent intent = new Intent(context, ViewerActivity.class);
 
         Bundle b = new Bundle();
-        b.putString(MainActivity.VIEWER_LOCATION_KEY, "CACHE");
+        b.putString(MainActivity.VIEWER_LOCATION_KEY, FileUtils.LOCATION.fromFile(f) != null ? Objects.requireNonNull(FileUtils.LOCATION.fromFile(f)).name() : null);
         b.putString(MainActivity.VIEWER_FILE_NAME_KEY, FileUtils.getFilename(f));
 
         intent.putExtras(b);
 
         context.startActivity(intent);
+    }
+    public void openGallery(View v) {
+        Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
+
+        startActivity(intent);
     }
 
     public void displayCanvasSizeFields(View v) {

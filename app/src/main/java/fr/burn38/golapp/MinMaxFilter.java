@@ -1,4 +1,4 @@
-package fr.burn38.gameoflifeapp;
+package fr.burn38.golapp;
 
 import android.text.InputFilter;
 import android.text.Spanned;

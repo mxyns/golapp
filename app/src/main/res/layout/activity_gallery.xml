@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GalleryActivity">
+
+    <TextView
+        android:id="@+id/gallery_title"
+        android:layout_width="0dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/gallery_title"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/gallery_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gallery_title"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TableLayout
+            android:id="@+id/gallery_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="800dp"
+            android:layout_marginTop="40dp"
+            android:paddingBottom="50dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/gallery_title"
+            app:layout_constraintStart_toStartOf="@+id/gallery_title"
+            app:layout_constraintTop_toTopOf="parent">
+        </TableLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

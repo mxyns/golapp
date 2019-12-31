@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.burn38.gameoflifeapp.EditorActivity">
+    tools:context="fr.burn38.golapp.EditorActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -37,11 +37,11 @@
             android:background="?attr/colorAccent"
             android:clickable="false">
 
-            <fr.burn38.gameoflifeapp.views.PaintView
+            <fr.burn38.golapp.views.PaintView
                 android:id="@+id/editor_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent"
+                android:background="#FF0000"
                 android:visibility="visible" />
 
         </FrameLayout>
@@ -75,12 +75,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:padding="5dp"
-            android:onClick="switchColor"
             android:contentDescription="@string/editor_switch_color_contentDescription"
-            app:srcCompat="@drawable/ic_switch_color_black"
+            android:onClick="switchColor"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_switch_color_black"
+            tools:src="@drawable/ic_switch_color_black"
             tools:srcCompat="@drawable/ic_switch_color_black" />
 
         <ImageButton
@@ -93,7 +94,8 @@
             android:contentDescription="@string/editor_save_image_contentDescription"
             android:onClick="saveImage"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_save"
+            android:src="@drawable/ic_save"
+            tools:src="@drawable/ic_save"
             tools:srcCompat="@drawable/ic_save" />
 
         <ImageButton
@@ -107,7 +109,8 @@
             android:onClick="sendImage"
             android:padding="12dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_send_arrow"
+            android:src="@drawable/ic_send_arrow"
+            tools:src="@drawable/ic_send_arrow"
             tools:srcCompat="@drawable/ic_send_arrow" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

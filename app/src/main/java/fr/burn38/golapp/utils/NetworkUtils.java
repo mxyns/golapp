@@ -1,17 +1,13 @@
-package fr.burn38.gameoflifeapp.utils;
+package fr.burn38.golapp.utils;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import fr.burn38.gameoflifeapp.EditorActivity;
-import fr.burn38.gameoflifeapp.MainActivity;
-import fr.burn38.gameoflifeapp.ViewerActivity;
+import fr.burn38.golapp.MainActivity;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,10 +20,11 @@ public class NetworkUtils {
     //TODO: make settings activity to change parameters
     //TODO: store api_url to @strings
 
+
     public static void postImage(Bitmap bm, File bmFile) {
         postImage(bm, bmFile, null);
     }
-    public static void postImage(Bitmap bm, File bmFile, File outputFile) {
+    public static void postImage(Bitmap bm, File bmFile, File outputFile) { // bmFile isUsed to save temporarily the bitmap
             Thread thread = new Thread(new PostThread(bm, bmFile, outputFile));
             thread.start();
     }
